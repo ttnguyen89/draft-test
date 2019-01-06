@@ -1,10 +1,20 @@
 package com.example.demo.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.example.demo.model.Country;
 import com.example.demo.repository.CountryRepository;
@@ -22,5 +32,40 @@ public class CountryController {
 		// This returns a JSON or XML with the users
 		return countryRepository.findAll();
 
+	}
+	
+	@GetMapping(path = "/country/{id}")
+	public String getCountry( Model model, @PathVariable("id") String id){
+		// This returns a JSON or XML with the users
+		Optional<Country> country = countryRepository.findById(id);
+		if(country.isPresent()) {
+			model.addAttribute("country", country.get());
+			return "editcountry.html";
+		}
+		else throw new RuntimeException("Country not found");
+
+	}
+	
+	@PostMapping(path="/country/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseStatus void modifyCountry(@PathVariable("id") String id, Country countryValue){
+		Optional<Country> country = countryRepository.findById(id);
+		if(country.isPresent()) {
+			country.get().setCountryName(countryValue.getCountryName());
+			countryRepository.save(country.get());
+		}
+		else throw new RuntimeException("Country not found");
+
+	}
+	
+	
+	@GetMapping("/countries")
+	public String getCountries(Model model) {
+		model.addAttribute("countries", countryRepository.findAll());
+		return "countries.html";
+	}
+	
+	@PostMapping(path="/countries", consumes = "application/json", produces = "application/json")
+	public String modifyCountries(@RequestBody List<Country> countries) {
+		return "";
 	}
 }

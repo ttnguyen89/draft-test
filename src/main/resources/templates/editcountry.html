@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Countries Tables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<h1>Modify a country</h1>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+		
+		    var message = /*[[${country}]]*/ '';
+		    console.log(message);
+		
+		/*]]>*/
+		</script>
+		<form th:action="@{'/country/'+${country.countryId}}" th:object="${country}" method="post">
+			<p>
+				Id: <input type="text" th:field="*{countryId}" readonly="readonly"/>
+			</p>
+			<p>
+				Name: <input type="text" th:field="*{countryName}" />
+			</p>
+			<p>
+				Region: <input type="text" th:field="*{region.regionName}" readonly="readonly"/>
+			</p>
+			<p>
+				<input id="submitId" type="submit" value="Submit" /> <input type="reset"
+					value="Reset" />
+			</p>
+		</form>
+	</div>
+</body>
+</html>

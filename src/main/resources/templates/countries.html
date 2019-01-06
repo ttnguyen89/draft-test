@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Countries Tables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<h1>Countries Table</h1>
+		<div class="row col-md-7 table-responsive">
+			<table id="customerTable" class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Region</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="country, rowStat: ${countries}"
+						th:style="${rowStat.odd} ? 'color: gray' : 'color: blue;'">
+						<td th:text="${country.countryId}">AR</td>
+						<td th:text="${country.countryName}">Argentina</td>
+						<td th:text="${country.region.regionName}">Americas</td>
+						<td><a class="btn" th:href="@{'/country/'+${country.countryId}}">Edit</a>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

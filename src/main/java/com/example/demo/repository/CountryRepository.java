@@ -13,7 +13,7 @@ import com.example.demo.model.Country;
 @RepositoryRestResource(collectionResourceRel = "country", path = "country")
 
 @Repository
-public interface CountryRepository extends PagingAndSortingRepository<Country, Long> {
+public interface CountryRepository extends PagingAndSortingRepository<Country, String> {
 
 	List<Country> findByCountryName(@Param("COUNTRY_NAME") String CountryName);
 

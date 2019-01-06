@@ -45,7 +45,7 @@ public class JobController {
 
 	}
 	
-	@PutMapping(path="/{id}") // permet de modifier la valeur de Job
+	@PutMapping(path="/{id}")// permet de modifier la valeur de Job
 	public @ResponseStatus void modifyJob(@PathVariable("id") String jobId, @RequestBody Job jobValue) {
 		Optional<Job> job = jobRepository.findById(jobId);
 		if(job.isPresent()) {
